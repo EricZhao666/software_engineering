@@ -27,39 +27,12 @@ public class lab1_2 {
                 + "strictfp、super、switch、synchronized、this、throw、throws、"
                 + "transient、try、void、volatile、while";//all keywords
         String []keyArr=keywords.split("、");
-
-
-
-
-
-
+        //check total key word
+        Find_All(keyArr,code);
+        //check switch and case
+        Find_Switch(code);
         //Compute if-else and if-elseif-else
-        Pattern p = Pattern.compile("else\\s*if|else|if");
-        Matcher matcher=p.matcher(code);
-        Stack<String> s = new Stack();
-        int count=0;
-        while(matcher.find()) {
-            String temp=code.substring(matcher.start(),matcher.end());
-            s.push(temp);
-        }
-        while(!s.isEmpty()) {
-            String temp=s.pop();
-            if(temp.equals("else")) {
-                String temp2=s.pop();
-                if(temp2.equals("if")) if_else_num++;
-                else if(temp2.equals("else if")) if_else_if_else_num++;
-                else if(temp2.equals("else")) count+=2;
-            }else if(count>0) {
-                if(temp.equals("else if")) if_else_if_else_num++;
-                else if(temp.equals("if")) if_else_num++;
-                count--;
-            }
-        }
-
-
-
-        System.out.println("\nif else num is "+if_else_num);
-        System.out.println("if else if else num is "+if_else_if_else_num);
+        Find_if(code);
 	}
 
     //check total key word
@@ -70,8 +43,8 @@ public class lab1_2 {
             while(matcher.find()) {
                 total_num++;
             }
-            System.out.println("total num is "+total_num);
         }
+        System.out.println("total num is "+total_num);
     }
     //check switch and case
     public static void Find_Switch(String code){
@@ -101,6 +74,33 @@ public class lab1_2 {
         for(int i=0;i<case_num.size();i++) {
             System.out.print(case_num.get(i)+" ");
         }
+    }
+
+    //Compute if-else and if-elseif-else
+    public static void Find_if(String code){
+        Pattern p = Pattern.compile("else\\s*if|else|if");
+        Matcher matcher=p.matcher(code);
+        Stack<String> s = new Stack();
+        int count=0;
+        while(matcher.find()) {
+            String temp=code.substring(matcher.start(),matcher.end());
+            s.push(temp);
+        }
+        while(!s.isEmpty()) {
+            String temp=s.pop();
+            if(temp.equals("else")) {
+                String temp2=s.pop();
+                if(temp2.equals("if")) if_else_num++;
+                else if(temp2.equals("else if")) if_else_if_else_num++;
+                else if(temp2.equals("else")) count+=2;
+            }else if(count>0) {
+                if(temp.equals("else if")) if_else_if_else_num++;
+                else if(temp.equals("if")) if_else_num++;
+                count--;
+            }
+        }
+        System.out.println("\nif else num is "+if_else_num);
+        System.out.println("if else if else num is "+if_else_if_else_num);
     }
 
 }
