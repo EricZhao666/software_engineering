@@ -43,6 +43,23 @@ public class lab1_2 {
             switch_num++;
         }
 
+        //check case
+        p=Pattern.compile("switch.*?}");
+        matcher=p.matcher(code);
+        List case_num=new ArrayList();
+        while(matcher.find()) {
+            String tempText=matcher.toString();//get one switch section
+            Pattern temp_p=Pattern.compile("case");
+            Matcher temp_matcher=temp_p.matcher(tempText);
+            int temp_case_num=0;
+            while(temp_matcher.find()) {
+                temp_case_num++;
+            }
+            case_num.add(temp_case_num);
+        }
+
+
+
 
 
 
