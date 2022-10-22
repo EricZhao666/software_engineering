@@ -18,7 +18,15 @@ public class lab1_2 {
         	code+=line;
         	line=bufferedReader.readLine();
         }
-		
+        String keywords="abstract、assert、boolean、break、byte、case、"
+                + "catch、char、class、continue、default、do、double、else、"
+                + "enum、extends、final、finally、float、for、if、implements、"
+                + "import、int、interface、instanceof、long、native、new、"
+                + "package、private、protected、public、return、short、static、"
+                + "strictfp、super、switch、synchronized、this、throw、throws、"
+                + "transient、try、void、volatile、while";//all keywords
+        String []keyArr=keywords.split("、");
+
 
 	
 	}
