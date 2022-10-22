@@ -81,6 +81,15 @@ public class lab1_2 {
             }
         }
 
+        System.out.println("total num is "+total_num);
+        System.out.println("switch num is "+switch_num);
+        System.out.print("case num are ");
+        for(int i=0;i<case_num.size();i++) {
+            System.out.print(case_num.get(i)+" ");
+        }
+        System.out.println("\nif else num is "+if_else_num);
+        System.out.println("if else if else num is "+if_else_if_else_num);
+
 
 
 
