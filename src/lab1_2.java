@@ -58,6 +58,31 @@ public class lab1_2 {
             case_num.add(temp_case_num);
         }
 
+        //Compute if-else and if-elseif-else
+        p = Pattern.compile("else\\s*if|else|if");
+        matcher=p.matcher(code);
+        Stack<String> s = new Stack();
+        int count=0;
+        while(matcher.find()) {
+            String temp=code.substring(matcher.start(),matcher.end());
+            s.push(temp);
+        }
+        while(!s.isEmpty()) {
+            String temp=s.pop();
+            if(temp.equals("else")) {
+                String temp2=s.pop();
+                if(temp2.equals("if")) if_else_num++;
+                else if(temp2.equals("else if")) if_else_if_else_num++;
+                else if(temp2.equals("else")) count+=2;
+            }else if(count>0) {
+                if(temp.equals("else if")) if_else_if_else_num++;
+                else if(temp.equals("if")) if_else_num++;
+                count--;
+            }
+        }
+
+
+
 
 
 
