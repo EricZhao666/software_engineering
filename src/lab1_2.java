@@ -27,6 +27,7 @@ public class lab1_2 {
                 + "transient、try、void、volatile、while";//all keywords
         String []keyArr=keywords.split("、");
 
+        //check total key word
         for(int i=0;i<keyArr.length;i++) {
             Pattern p=Pattern.compile("[^a-z]"+keyArr[i]+"[^a-z]");
             Matcher matcher=p.matcher(code);
@@ -34,6 +35,18 @@ public class lab1_2 {
                 total_num++;
             }
         }
+
+        //check switch
+        Pattern p=Pattern.compile("switch");
+        Matcher matcher=p.matcher(code);
+        while(matcher.find()) {
+            switch_num++;
+        }
+
+
+
+
+
 
 
 
