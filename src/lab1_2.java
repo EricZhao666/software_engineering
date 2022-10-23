@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,9 +10,10 @@ import java.util.regex.Pattern;
 public class lab1_2 {
     static int total_num=0,switch_num=0,ifElseNum=0,ifElseIfNum=0;
 	public static void main(String [] args) throws Exception {
-
+        Scanner scanner=new Scanner(System.in);
 		String code="";
-        String fileName ="src/samplec.c";
+        String fileName =scanner.nextLine();
+        int level=scanner.nextInt();
         FileReader fileReader = new FileReader(fileName);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line=bufferedReader.readLine();
@@ -27,13 +29,18 @@ public class lab1_2 {
                 + "strictfp、super、switch、synchronized、this、throw、throws、"
                 + "transient、try、void、volatile、while";//all keywords
         String []keyArr=keywords.split("、");
-        //check total key word
-        Find_All(keyArr,code);
-        //check switch and case
-        Find_Switch(code);
-        //Compute if-else and if-elseif-else
-        //Find_if(code);
-        processElse(code);
+        if (level==1){
+            Find_All(keyArr,code);
+        }
+        else if (level==2){
+            Find_All(keyArr,code);
+            Find_Switch(code);
+        }else if (level>=3){
+            Find_All(keyArr,code);
+            Find_Switch(code);
+            processElse(code);
+        }
+        scanner.close();
 	}
 
     //check total key word
@@ -75,6 +82,7 @@ public class lab1_2 {
         for(int i=0;i<case_num.size();i++) {
             System.out.print(case_num.get(i)+" ");
         }
+        System.out.println();
     }
 
     //Compute if-else and if-elseif-else
@@ -117,7 +125,7 @@ public class lab1_2 {
             }
         }
         System.out.println("if-else num: " + ifElseNum);
-        System.out.println("if-else num: " + ifElseIfNum);
+        System.out.println("if-elseif-else: " + ifElseIfNum);
     }
 
 
