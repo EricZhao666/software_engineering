@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class lab1_2 {
-    static int total_num=0,switch_num=0,if_else_num=0,if_else_if_else_num=0;
+    static int total_num=0,switch_num=0,ifElseNum=0,ifElseIfNum=0;
 	public static void main(String [] args) throws Exception {
 
 		String code="";
@@ -32,7 +32,8 @@ public class lab1_2 {
         //check switch and case
         Find_Switch(code);
         //Compute if-else and if-elseif-else
-        Find_if(code);
+        //Find_if(code);
+        processElse(code);
 	}
 
     //check total key word
@@ -77,30 +78,47 @@ public class lab1_2 {
     }
 
     //Compute if-else and if-elseif-else
-    public static void Find_if(String code){
+    public static void processElse(String code) {
         Pattern p = Pattern.compile("else\\s*if|else|if");
         Matcher matcher=p.matcher(code);
         Stack<String> s = new Stack();
-        int count=0;
         while(matcher.find()) {
             String temp=code.substring(matcher.start(),matcher.end());
             s.push(temp);
         }
-        while(!s.isEmpty()) {
-            String temp=s.pop();
-            if(temp.equals("else")) {
-                String temp2=s.pop();
-                if(temp2.equals("if")) if_else_num++;
-                else if(temp2.equals("else if")) if_else_if_else_num++;
-                else if(temp2.equals("else")) count+=2;
-            }else if(count>0) {
-                if(temp.equals("else if")) if_else_if_else_num++;
-                else if(temp.equals("if")) if_else_num++;
-                count--;
+        Stack<String> res = new Stack<String>();
+        boolean flag = false;
+        while (!s.isEmpty()) {
+            String temp = s.pop();
+            if (temp.equals("else")) {
+                res.push(temp);
+            } else if (temp.equals("else if")) {
+                res.push(temp);
+
+            } else {//说明我们遇到的是if
+                //当res栈的顶端是else if的时候我们就需要循环pop出else-if一直到else为止
+                while (res.peek().equals("else if")) {
+                    res.pop();
+                    //做个标记说明是从else——if来的，而不是else
+                    flag = true;
+
+                }
+                if (res.peek().equals("else")) {
+                    res.pop();
+                }
+                //如果是else-if来的话就加到elseif上
+                if (flag) {
+                    ifElseIfNum++;
+                    flag = false;
+                    //否则加到else上
+                } else {
+                    ifElseNum++;
+                }
             }
         }
-        System.out.println("\nif else num is "+if_else_num);
-        System.out.println("if else if else num is "+if_else_if_else_num);
+        System.out.println("if-else num: " + ifElseNum);
+        System.out.println("if-else num: " + ifElseIfNum);
     }
+
 
 }
